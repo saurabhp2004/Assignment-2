@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbd3e9, #bb377d);
+            text-align: center;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            margin: auto;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            color: darkblue;
+        }
+
+        .form-group {
+            margin: 10px;
+            text-align: left;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .register-btn {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="firstName">
+            <span class="error" id="errorFirstName"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="lastName">
+            <span class="error" id="errorLastName"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email">
+            <span class="error" id="errorEmail"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password">
+            <span class="error" id="errorPassword"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Re-enter Password</label>
+            <input type="password" id="rePassword">
+            <span class="error" id="errorRePassword"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label><br>
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <span class="error" id="errorGender"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age">
+            <span class="error" id="errorAge"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone">
+            <span class="error" id="errorPhone"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <textarea id="address"></textarea>
+            <span class="error" id="errorAddress"></span>
+        </div>
+
+        <div class="form-group">
+            <label>State</label>
+            <input type="text" id="state">
+            <span class="error" id="errorState"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Country</label>
+            <select id="country">
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+            </select>
+            <span class="error" id="errorCountry"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Languages Known</label><br>
+            <input type="checkbox" value="English"> English
+            <input type="checkbox" value="Hindi"> Hindi
+            <input type="checkbox" value="Kannada"> Kannada
+            <input type="checkbox" value="Telugu"> Telugu
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" id="declaration"> Hereby I declare all the given details are true.
+            <span class="error" id="errorDeclaration"></span>
+        </div>
+
+        <button type="submit" class="register-btn">REGISTER</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            function showError(id, message) {
+                document.getElementById(id).innerText = message;
+                isValid = false;
+            }
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let rePassword = document.getElementById("rePassword").value;
+            let age = document.getElementById("age").value;
+            let phone = document.getElementById("phone").value;
+            let address = document.getElementById("address").value;
+            let state = document.getElementById("state").value;
+            let country = document.getElementById("country").value;
+            let gender = document.querySelector('input[name="gender"]:checked');
+            let declaration = document.getElementById("declaration").checked;
+
+            if (firstName.trim() === "") showError("errorFirstName", "POOR");
+            else clearError("errorFirstName");
+
+            if (lastName.trim() === "") showError("errorLastName", "POOR");
+            else clearError("errorLastName");
+
+            if (email.trim() === "" || !email.includes("@")) showError("errorEmail", "POOR");
+            else clearError("errorEmail");
+
+            if (password.length < 6) showError("errorPassword", "POOR");
+            else clearError("errorPassword");
+
+            if (rePassword !== password) showError("errorRePassword", "POOR OR MISMATCH");
+            else clearError("errorRePassword");
+
+            if (!gender) showError("errorGender", "Select Gender");
+            else clearError("errorGender");
+
+            if (age < 1) showError("errorAge", "POOR");
+            else clearError("errorAge");
+
+            if (phone.length !== 10 || isNaN(phone)) showError("errorPhone", "POOR");
+            else clearError("errorPhone");
+
+            if (address.trim() === "") showError("errorAddress", "POOR");
+            else clearError("errorAddress");
+
+            if (state.trim() === "") showError("errorState", "POOR");
+            else clearError("errorState");
+
+            if (country === "") showError("errorCountry", "Select Country");
+            else clearError("errorCountry");
+
+            if (!declaration) showError("errorDeclaration", "Must Agree");
+            else clearError("errorDeclaration");
+
+            return isValid;
+        }
+    </script>
+
+</body>
+</html>
